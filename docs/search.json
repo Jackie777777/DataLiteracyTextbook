@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Data Literacy",
     "section": "",
-    "text": "This is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2"
+    "text": "Here is the textbook form ENVS 543."
   },
   {
     "objectID": "intro.html",
@@ -19,6 +19,55 @@
     "title": "2  Summary",
     "section": "",
     "text": "1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "Joins.html",
+    "href": "Joins.html",
+    "title": "3  Joins",
+    "section": "",
+    "text": "Rarely do we work on only one data.frame, particularly when we start working with complex data and data contained within relational databases. In these cases, data are factored into several tables (akin to data.frame objects) with entries that connect the information from one table to another. Consider the following example tables\nEach has a column I named Key and another with some data in it. In R they could be defined as:\nand"
+  },
+  {
+    "objectID": "Joins.html#keys",
+    "href": "Joins.html#keys",
+    "title": "3  Joins",
+    "section": "3.1 Keys",
+    "text": "3.1 Keys\nAn important component of relational data are the keys. These are unique identifiers for a particular datum from a table. In each of these examples the variable (obviously named) Key is what is called a Primary Key because it uniquely identifies each row. You can verify this by counting the number of entries then filtering only for ones with 2 or more instances.\n\nlibrary( tidyverse )\n\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──\n✔ ggplot2 3.3.6      ✔ purrr   0.3.4 \n✔ tibble  3.1.8      ✔ dplyr   1.0.10\n✔ tidyr   1.2.1      ✔ stringr 1.4.1 \n✔ readr   2.1.2      ✔ forcats 0.5.2 \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\n\ndf.X %>%\n  count( Key ) %>%\n  filter( n > 1 )\n\n[1] Key n  \n<0 rows> (or 0-length row.names)\n\n\nNotice there is nothing here as each is unique.\n\nThe column Key is a Primary Key for the df.X data because it identifies a unique row in that table. In addition to a Primary Key we can have a Foreign Key when it is used to indicate data within a separate table. For example, if I am interested to see if the smallest value in df.X$X corresponds with the smallest value in df.Y$Y, then I will be using the Key form df.X representing max(X) to find the value of Y in df.Y and evaluate if it is max(Y). This means that df.X$Key is a Foreign Key as it points to a row in the df.Y data frame.\n\nThe keys are used to link together different tables."
+  },
+  {
+    "objectID": "Joins.html#left-join",
+    "href": "Joins.html#left-join",
+    "title": "3  Joins",
+    "section": "4.1 Left Join",
+    "text": "4.1 Left Join\nA left join is one where all the data from the left data frame is in the result and the data whose keys in the right data frame are present in the left one are also included. Graphically, this leads to:\n\n\n\nleft join\n\n\nWhere in R we do this using the left_join() function.\n\ndf.X %>%\n  left_join( df.Y, by=\"Key\")\n\n  Key X  Y\n1   A 1 NA\n2   B 2 10\n3   C 3 11"
+  },
+  {
+    "objectID": "Joins.html#right-join",
+    "href": "Joins.html#right-join",
+    "title": "3  Joins",
+    "section": "4.2 Right Join",
+    "text": "4.2 Right Join\nThe right join does the same thing but keeps all the keys in the right data table and has missing data where the key in the left one is not in the right one.\n\n\n\nRight Join\n\n\nThis is accomplished using the right_join() function.\n\ndf.X %>%\n  right_join( df.Y, by=\"Key\")\n\n  Key  X  Y\n1   B  2 10\n2   C  3 11\n3   D NA 12"
+  },
+  {
+    "objectID": "Joins.html#full-or-outer-join",
+    "href": "Joins.html#full-or-outer-join",
+    "title": "3  Joins",
+    "section": "4.3 Full (or Outer) Join",
+    "text": "4.3 Full (or Outer) Join\nThis join is one where all the keys are retained adding missing data as necessary.\n\n\n\nOuter Join\n\n\n\ndf.X %>%\n  full_join( df.Y, by=\"Key\")\n\n  Key  X  Y\n1   A  1 NA\n2   B  2 10\n3   C  3 11\n4   D NA 12"
+  },
+  {
+    "objectID": "Joins.html#inner-join",
+    "href": "Joins.html#inner-join",
+    "title": "3  Joins",
+    "section": "4.4 Inner Join",
+    "text": "4.4 Inner Join\nThe last one retains only those keys that are common in both.\n\n\n\nInner Join\n\n\n\ndf.X %>%\n  inner_join( df.Y, by=\"Key\")\n\n  Key X  Y\n1   B 2 10\n2   C 3 11"
+  },
+  {
+    "objectID": "Joins.html#questions",
+    "href": "Joins.html#questions",
+    "title": "3  Joins",
+    "section": "5.1 Questions",
+    "text": "5.1 Questions\nIf you have any questions for me specifically on this topic, please post as an Issue in your repository, otherwise consider posting to the discussion board on Canvas."
   },
   {
     "objectID": "references.html",

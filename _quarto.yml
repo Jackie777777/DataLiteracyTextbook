@@ -10,6 +10,7 @@ book:
     - index.qmd
     - intro.qmd
     - summary.qmd
+    - Joins.qmd
     - references.qmd
 
 bibliography: references.bib
